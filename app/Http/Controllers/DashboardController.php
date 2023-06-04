@@ -5,14 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Book;
 
 class DashboardController extends Controller
 {
     public function index()
     {
         $current_user = auth()->user();
+        $books = Book::all();
+ 
         return view ('dashboard.index')
-        ->with('current_user', $current_user);
+        ->with('current_user', $current_user)
+        ->with('books',$books);
     }
 
     /**
