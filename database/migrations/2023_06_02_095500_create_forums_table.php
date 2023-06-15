@@ -15,8 +15,8 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('title');
             $table->string('content');
-            $table->foreignUuid('user_id')->references('id')->on('users');
-            $table->foreignUuid('book_id')->references('id')->on('books');
+            $table->foreignUuid('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignUuid('book_id')->references('id')->on('books')->onDelete('cascade');
             $table->timestamps();
         });
     }

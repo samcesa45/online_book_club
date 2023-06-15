@@ -41,4 +41,8 @@ Route::name('api.')->prefix('v1')->group(function(){
     Route::post('/register',[App\Http\Controllers\API\AuthController::class,'register'])->name('register');
     Route::post('/login',[App\Http\Controllers\API\AuthController::class,'login'])->name('login');
     Route::post('/recover-password',[App\Http\Controllers\API\AuthController::class,'recoverPassword'])->name('recoverPassword');
+    Route::resource('books',App\Http\Controllers\API\BookAPIController::class);
+    Route::resource('book_recommendations',App\Http\Controllers\API\BookRecommendationAPIController::class);
+    Route::resource('profiles', App\Http\Controllers\API\ProfileAPIController::class);
+    Route::resource('book_reviews', App\Http\Controllers\API\BookReviewAPIController::class);
 });

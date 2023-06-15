@@ -4,7 +4,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 class Book extends Model
 {
     use HasFactory, HasUuids;
@@ -16,10 +17,21 @@ class Book extends Model
        'author',
        'description',
        'cover_image_path',
+       'cover_image',
+       
     ];
 
     protected $hidden = [];
     protected $casts = [];
+
+
+    protected function coverImage(): Attribute
+    {
+    return Attribute::make(
+        get: fn ($value) => str_contains($value,'http') ? $value : Storage::url($value),
+    );
+    
+    }
 
     public function ratings()
     {
@@ -33,7 +45,7 @@ class Book extends Model
 
     public function reviews()
     {
-        return $this->hasMany(\App\Models\UserBookReview::class);
+        return $this->hasMany(\App\Models\BookReview::class);
     }
 
     public function recommendations()

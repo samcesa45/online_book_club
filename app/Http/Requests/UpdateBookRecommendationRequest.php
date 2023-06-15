@@ -3,15 +3,17 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\BookRecommendation;
+use App\Http\Requests\AppBaseFormRequest;
 
-class UpdateBookRecommendationRequest extends FormRequest
+class UpdateBookRecommendationRequest extends AppBaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,8 @@ class UpdateBookRecommendationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'exists:users,id',
+            'book_id' => 'exists:books,id',
         ];
     }
 }

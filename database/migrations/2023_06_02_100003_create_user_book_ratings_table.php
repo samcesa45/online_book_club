@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('user_book_ratings', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->integer('rating')->default(0);
-            $table->foreignUuid('user_id')->references('id')->on('users');
-            $table->foreignUuid('book_id')->references('id')->on('books');
+            $table->foreignUuid('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignUuid('book_id')->references('id')->on('books')->onDelete('cascade');
             $table->timestamps();
             
         });

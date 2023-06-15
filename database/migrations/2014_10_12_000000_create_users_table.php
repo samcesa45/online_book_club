@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('telephone')->nullable();
-            $table->dateTime('date_of_birth')->nullable();
+            $table->string('job_title')->nullable();
+            $table->date('date_of_birth')->nullable();
             $table->string('profile_picture_path')->nullable();
             $table->boolean('is_platform_admin')->default(false);
             $table->string('username')->nullable();

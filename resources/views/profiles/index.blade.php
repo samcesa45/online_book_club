@@ -1,4 +1,21 @@
 @extends('layouts.app')
+{{-- <link href="{{asset('vendor/fontawesome-free/scss/fontawesome.scss')}}" rel="stylesheet"> --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css" integrity="sha512-OdEXQYCOldjqUEsuMKsZRj93Ht23QRlhIb8E/X0sbwZhme8eUw6g8q7AdxGJKakcBbv7+/PX0Gc2btf7Ru8cZA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="{{ asset('vendor/sweetalert/dist/sweetalert.css') }}" rel="stylesheet">
+<link href="{{ asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+  <!-- Bootstrap core JavaScript-->
+  <script src="{{ asset('vendor/jquery/jquery.min.js')}}"></script>
+  <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{ asset('vendor/sweetalert/dist/sweetalert.min.js') }}"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+  <script src="{{ asset('dist/bootstrap-5.2.3-dist/js/bootstrap.min.js') }}"></script>
+
 <style>
   body{
     position: relative;
@@ -100,40 +117,59 @@
 }
 }
 </style>
+
+@section('content')
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    @include('layouts.sidebar')
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+            <!-- Topbar -->
+           @include('dashboard.partials.header')
+            <!-- End of Topbar -->
 <div class="container emp-profile">
-  <form method="post">
       <div class="row">
+          @foreach($profiles as $profile)
+          @if(!empty($profile))
           <div class="col-md-4">
-              <div class="profile-img">
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
-                  <div class="file btn btn-lg btn-primary">
-                      Change Photo
-                      <input type="file" name="file"/>
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-6">
-              <div class="profile-head">
-                          <h5>
-                              Kshiti Ghelani
-                          </h5>
-                          <h6>
-                              Web Developer and Designer
-                          </h6>
-                          <p class="proile-rating">RANKINGS : <span>8/10</span></p>
-                  <ul class="nav nav-tabs" id="myTab" role="tablist">
-                      <li class="nav-item">
-                          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
-                      </li>
-                  </ul>
-              </div>
-          </div>
-          <div class="col-md-2">
-              <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
-          </div>
+            <div class="profile-img">
+                <img  src="{{url('storage/' . $profile->profile_picture_path)}}" alt="profile-img">
+                {{-- <div class="file btn btn-lg btn-primary">
+                    Change Photo
+                    <input class="form-control" type="file" id="profile_picture_path" name="profile_picture_path">
+                </div> --}}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="profile-head">
+                        <h5>
+                           {{$profile->first_name}} {{$profile->last_name}}
+                        </h5>
+                        <h6>
+                           {{$profile->job_title}}
+                        </h6>
+                        <p class="proile-rating">RANKINGS : <span>8/10</span></p>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-2">
+          <a data-toggle="tooltip" 
+          title="Edit" 
+          data-val='{{$profile->id}}' 
+          class="btn-edit-mdl-profile me-2" href="#">
+          <i class="fas fa-edit"></i>
+          </a>
+        </div>
+         
       </div>
       <div class="row">
           <div class="col-md-4">
@@ -158,7 +194,7 @@
                                       <label>User Id</label>
                                   </div>
                                   <div class="col-md-6">
-                                      <p>Kshiti123</p>
+                                      <p>{{$profile->username}}</p>
                                   </div>
                               </div>
                               <div class="row">
@@ -166,7 +202,7 @@
                                       <label>Name</label>
                                   </div>
                                   <div class="col-md-6">
-                                      <p>Kshiti Ghelani</p>
+                                      <p>{{$profile->first_name}} {{$profile->last_name}}</p>
                                   </div>
                               </div>
                               <div class="row">
@@ -174,7 +210,7 @@
                                       <label>Email</label>
                                   </div>
                                   <div class="col-md-6">
-                                      <p>kshitighelani@gmail.com</p>
+                                      <p>{{$profile->email}}</p>
                                   </div>
                               </div>
                               <div class="row">
@@ -182,7 +218,7 @@
                                       <label>Phone</label>
                                   </div>
                                   <div class="col-md-6">
-                                      <p>123 456 7890</p>
+                                      <p>{{$profile->telephone}}</p>
                                   </div>
                               </div>
                               <div class="row">
@@ -190,7 +226,7 @@
                                       <label>Profession</label>
                                   </div>
                                   <div class="col-md-6">
-                                      <p>Web Developer and Designer</p>
+                                      <p>{{$profile->job_title}}</p>
                                   </div>
                               </div>
                   </div>
@@ -243,7 +279,19 @@
                       </div>
                   </div>
               </div>
+              @endif
+              @endforeach
           </div>
-      </div>
-  </form>           
+      </div>           
 </div>
+
+
+@include('profiles.modal')
+<!-- Logout Modal-->
+@include('dashboard.partials.logout_modal')
+@include('dashboard.partials.footer')
+
+
+</div>
+</div>
+@stop

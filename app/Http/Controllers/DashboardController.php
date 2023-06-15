@@ -6,16 +6,26 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Book;
+use App\Models\BookReview;
+use App\Models\BookRecommendation;
+use Illuminate\Support\Collection;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $current_user = auth()->user();
+       
         $books = Book::all();
+        $book_reviews = BookReview::with('Book')->get();
+     
+        $current_user = auth()->user();
+        $bookRecommendations = BookRecommendation::with('Book')->get()->take(4);
+        // dd($bookRecommendations);
  
         return view ('dashboard.index')
         ->with('current_user', $current_user)
+        ->with('book_recommendations',$bookRecommendations)
+        ->with('book_reviews',$book_reviews)
         ->with('books',$books);
     }
 
@@ -78,4 +88,19 @@ class DashboardController extends Controller
  
     return redirect('/');
 }
+
+    public function join() {
+        return view('dashboard.join');
+    }
+
+   
+
+    protected function search(Collection $collection) {
+        foreach(request()->query as $query => $value) {
+          if(isset($query,$value) && !in_array($query,['skip','limit','sort_by','sort_order','per_page'])) {
+            $collection=$collection->where($query,$value);
+          }
+        }
+        return $collection;
+      }
 }

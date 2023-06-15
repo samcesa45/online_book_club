@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('book_reviews', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('review_text');
-            $table->foreignUuid('user_id')->references('id')->on('users');
-            $table->foreignUuid('book_id')->references('id')->on('books');
+            $table->foreignUuid('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignUuid('book_id')->references('id')->on('books')->onDelete('cascade');
             $table->timestamps();
         });
     }

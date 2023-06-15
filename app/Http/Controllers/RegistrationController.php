@@ -48,7 +48,7 @@ class RegistrationController extends Controller
         ]);
 
              
-        return redirect()->intended('dashboard.index')->withSuccess('Registration successful');
+        return redirect()->intended('dashboard')->withSuccess('Registration successful');
         
     }
 

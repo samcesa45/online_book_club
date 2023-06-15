@@ -20,7 +20,12 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', [App\Http\Controllers\DashboardController::class,'index'])->name('dashboard');
-    Route::get('profile', [App\Http\Controllers\ProfileController::class,'index'])->name('profile');
+    // Route::get('dashboard', [App\Http\Controllers\DashboardController::class,'join'])->name('join');
+    Route::resource('books',App\Http\Controllers\BookController::class);
+    Route::resource('book_recommendations',App\Http\Controllers\BookRecommendationController::class);
+    // Route::post('dashboard', [App\Http\Controllers\DashboardController::class,'search'])->name('search');
+    Route::resource('profiles', App\Http\Controllers\ProfileController::class);
+    Route::resource('book_reviews', App\Http\Controllers\BookReviewController::class);
     Route::get('logout', [App\Http\Controllers\DashboardController::class,'logout'])->name('logout');
 });
 
